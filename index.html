@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourism Page</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap CSS link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ06R1S6p1t9+H4s+bHgxw8x7AR4gqZ6T73F2PzOEXkQmbmuQf1khgA2Xnx2" crossorigin="anonymous">
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Custom CSS for upgraded tourism page */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #2f4f4f;
+            color: white;
+            padding-top: 20px;
+            transition: 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            padding: 16px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #28a745;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #main-content {
+            transition: margin-left 0.5s;
+            padding: 20px;
+        }
+
+        .toggle-btn {
+            font-size: 30px;
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            cursor: pointer;
+            z-index: 1000;
+            color: #333;
+        }
+
+        /* Header */
+        .tourism-header {
+            text-align: center;
+            background: url('https://via.placeholder.com/1200x600?text=Travel+the+World') no-repeat center center/cover;
+            padding: 80px 0;
+            color: white;
+            background-size: cover;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .tourism-header h1 {
+            font-size: 4.5rem;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+        }
+
+        .tourism-header p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+        .tourism-header img{
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+        }
+        /* Search Bar */
+        .search-container {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .search-container .input-group {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .search-container .form-control {
+            border-radius: none;
+            height: 30px;
+            width: 400px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            border-bottom: 2px solid rgb(78, 78, 78);
+        }
+
+        .search-container button {
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 24px;
+            font-size: 1rem;
+            border:none;
+            outline: none;
+        }
+
+        /* Content Section */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body h5 {
+            font-size: 1.6rem;
+            color: #333;
+        }
+
+        .card-body p {
+            color: #777;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .card-body a {
+            display: block;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-body a:hover {
+            background-color: #218838;
+        }
+
+        /* Carousel */
+        .carousel-inner img {
+            height: 500px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-inner img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .testimonial-card {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: scale(1.05);
+        }
+
+        .testimonial-card p {
+            font-size: 1.2rem;
+            color: #777;
+            line-height: 1.8;
+        }
+        #theme-toggle{
+            font-size: 18px;
+            background-color: #2f4f4f;
+            color: white;
+            padding-left: 8px;
+            border: none;
+            border-radius: none;
+            outline: none;
+            width: 100%;
+            height: 55px;
+            text-align: left;
+        }
+        #theme-toggle:hover{
+            background-color: #218838;
+        }
+        #theme-icon{
+            padding-right: 10px;
+        }
+
+/* Newsletter Section */
+.newsletter {
+        background-color: #2f4f4f;
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .newsletter h3 {
+        font-size: 1.8rem;
+    }
+
+    .newsletter p {
+        font-size: 1rem;
+        margin: 10px 0 20px;
+    }
+
+    .newsletter form {
+        display: inline-block;
+    }
+
+    .newsletter input[type="email"] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        font-size: 1rem;
+    }
+
+    .newsletter button {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .newsletter button:hover {
+        background-color: #218838;
+    }
+
+    /* Scroll-to-Top Button */
+    #scrollToTop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        font-size: 1.5rem;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        z-index: 1000;
+    }
+
+    #scrollToTop:hover {
+        background-color: #218838;
+    }
+
+    /* Dark Mode */
+    .dark-mode {
+        background-color: #121212;
+        color: white;
+    }
+
+    .dark-mode .card {
+        background-color: #1e1e1e;
+    }
+
+    .dark-mode .footer, .dark-mode .newsletter {
+        background-color: #1e1e1e;
+    }
+
+    .dark-mode .card-body a {
+        background-color: #444;
+    }
+
+    .dark-mode .card-body a:hover {
+        background-color: #555;
+    }
+
+        .testimonial-card strong {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* Footer Section */
+        .footer {
+            background-color: #28a745;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .footer a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .social-icons i {
+            font-size: 1.8rem;
+            margin: 0 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .social-icons i:hover {
+            color: #218838;
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+            }
+
+            .tourism-header h1 {
+                font-size: 3.5rem;
+            }
+
+            .tourism-header p {
+                font-size: 1.2rem;
+            }
+
+            .content .card {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .carousel-inner img {
+                height: 400px;
+            }
+
+            .search-container .input-group {
+                max-width: 90%;
+            }
+
+            .footer .social-icons i {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .tourism-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .tourism-header p {
+                font-size: 1rem;
+            }
+
+            .content .card {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .testimonial-card {
+                margin: 20px;
+                padding: 30px;
+            }
+
+            .footer {
+                padding: 30px 0;
+            }
+
+            .footer .social-icons i {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="sidebar" id="mySidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <a href="#">Home</a>
+        <a href="#">Destinations</a>
+        <a href="#">Adventure</a>
+        <a href="#">Contact</a>
+        <button id="theme-toggle" class="btn btn-outline-secondary">
+            <i class="fas fa-moon" id="theme-icon"></i>Theme
+        </button>
+    </div>
+
+    <div id="main-content">
+
+        <!-- Toggle Button -->
+        <span class="toggle-btn" onclick="openNav()"><i class="fas fa-bars" id="ficha"></i></span>
+
+        <!-- Header -->
+        <div class="tourism-header">
+            <img src="forest1.jpg" alt="">
+            <h1>Explore the World with Us</h1>
+            <p>Your adventure begins here</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="input-group">
+                <input type="text" class="form-control" id="searchBar" placeholder="Search for your dream destination">
+                <button class="btn" onclick="searchDestinations()">Search</button>
+            </div>
+        </div>
+
+        <!-- Featured Destinations -->
+        <div class="content">
+            <div class="card">
+                <img src="datingscout-N3OVbfwflo4-unsplash.jpg" alt="Beach">
+                <div class="card-body">
+                    <h5 class="card-title">Amazing Beach</h5>
+                    <p class="card-text">Relax on pristine beaches with crystal-clear waters and beautiful sunsets.</p>
+                    <a href="#">Learn More</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="danilo-calic-DlgFZG0MvaU-unsplash.jpg" alt="Mountain">
+                <div class="card-body">
+                    <h5 class="card-title">Mountain Adventures</h5>
+                    <p class="card-text">Explore breathtaking mountain ranges and enjoy thrilling hiking experiences.</p>
+                    <a href="#">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="testimonials">
+            <h2>What Our Travelers Say</h2>
+            <div class="testimonial-card">
+                <p>"The best vacation I've ever had! The scenery was breathtaking, and the adventure never stopped. Highly recommended!"</p>
+                <strong>- Jane Doe</strong>
+            </div>
+            <div class="testimonial-card">
+                <p>"An unforgettable experience. We explored the most stunning places and made memories that will last a lifetime."</p>
+                <strong>- John Smith</strong>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="social-icons">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+            <p>&copy; 2024 Tourism Adventures. All Rights Reserved.</p>
+        </div>
+    </div>
+    <div class="newsletter">
+        <h3>Subscribe to Our Newsletter</h3>
+        <p>Get updates on the latest travel destinations and offers directly to your inbox.</p>
+        <form id="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+    
+    <!-- Scroll-to-Top Button -->
+    <button id="scrollToTop" onclick="scrollToTop()">⬆</button>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        const ficha = document.getElementById('ficha');
+        document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const body = document.body;
+
+    // Load saved theme from local storage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if (body.classList.contains('dark-mode')) {
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+});
+
+        function openNav() {
+            document.getElementById("mySidebar").style.left = "0";
+            document.getElementById("main-content").style.marginLeft = "250px";
+            ficha.style.display = "none";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.left = "-250px";
+            document.getElementById("main-content").style.marginLeft = "0";
+            ficha.style.display = "block";
+        }
+
+        function searchDestinations() {
+            const query = document.getElementById('searchBar').value;
+            alert(`Searching for: ${query}`);
+        }
+    </script>
+</body>
+
+</html>
